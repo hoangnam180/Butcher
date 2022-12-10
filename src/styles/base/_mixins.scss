@@ -1,0 +1,45 @@
+$desktop: 1920px;
+$screen-1366: 1366px;
+$tablet: 1024px;
+$phone: 768px;
+$phone-small: 576px;
+
+@mixin desktop {
+  @media only screen and (max-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin screen-1366 {
+  @media only screen and (max-width: $screen-1366) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media only screen and (max-width: $phone) {
+    @content;
+  }
+}
+
+@mixin phone-small {
+  @media only screen and (max-width: $phone-small) {
+    @content;
+  }
+}
+
+@mixin text-style($fontWeight, $fontSize, $lineHeight, $textAlign, $color) {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: $fontWeight;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  text-align: $textAlign;
+  color: $color;
+}
