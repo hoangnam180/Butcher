@@ -1,5 +1,4 @@
-export const API_SERVER =
-  'https://238f-2405-4802-60bb-b0-35b1-546c-5467-b57c.ap.ngrok.io';
+export const API_SERVER = 'http://localhost:4000';
 export const ACCESS_TOKEN = '_ac_tk_topaz';
 export const USER_INFO = 'user_info';
 export const IS_AUTH = 'is_auth';
