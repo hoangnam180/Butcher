@@ -33,6 +33,7 @@ function Checkout() {
         don_gia: item?.gia_sp,
         so_luong: item?.quantity,
         id: item?._id,
+        ten_sp: item?.ten_sp,
       };
     });
     return result;
