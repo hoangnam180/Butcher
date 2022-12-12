@@ -8,12 +8,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
-
+import 'antd/dist/antd.css';
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <RouterComponent />;
+        <RouterComponent />
       </Router>
     </Provider>
   );

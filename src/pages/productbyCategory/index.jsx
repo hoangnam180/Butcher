@@ -1,49 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loading from 'src/components/common/Loading';
-import { Pagination } from 'antd';
-import { getCategories, getProducts } from 'src/libs/apis/home';
+import { getCategories, getProductsByCategory } from 'src/libs/apis/home';
 import { API_SERVER } from 'src/constants/configs';
-import { useCustomSearchParams } from 'src/hooks/useSeachParams';
-import { useDispatch } from 'react-redux';
-import { actionAddToCart } from 'src/store/cartSlice';
-import { actionToast } from 'src/store/authSlice';
-function Home() {
+function ProductByCategory() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [totalPage, setTotalPage] = useState(0);
-  const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useCustomSearchParams();
+  const params = useParams();
   const navigation = useNavigate();
-  const onPageChange = (page) => {
-    setSearchParams({ page });
-  };
   const handleClickCategory = (id) => {
     navigation(`/products/${id}`);
-  };
-  const handleAddtocart = (data) => {
-    dispatch(
-      actionAddToCart({
-        data,
-        step: 1,
-      })
-    );
-    dispatch(
-      actionToast({ title: 'Thêm vào giỏ hàng thành công!', type: 'success' })
-    );
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await getProducts({
-          page: searchParams?.page || 1,
-        });
-        const resCategory = await getCategories();
+        const res = await getProductsByCategory(params.id);
         setProducts(res.data);
-        setCategories(resCategory.data);
-        setTotalPage(res.total);
         setLoading(false);
       } catch {
         setLoading(false);
@@ -51,7 +25,21 @@ function Home() {
       }
     };
     fetchData();
-  }, [searchParams?.page]);
+  }, [params.id]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resCategory = await getCategories();
+        setCategories(resCategory.data);
+        setLoading(false);
+      } catch {
+        setLoading(false);
+        console.log('error');
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <>
       {loading ? (
@@ -116,13 +104,14 @@ function Home() {
                 <div className="filterCat hidden-xs">
                   <div className="catProduct catProduct1 active">
                     <ul className="cat cat1 active">
-                      <li className="active">
+                      <li onClick={() => navigation('/')}>
                         <span>Tất cả</span>
                       </li>
                       {categories.map((item) => (
                         <li
                           onClick={() => handleClickCategory(item?._id)}
                           key={item?._id}
+                          className={item?._id === params.id ? 'active' : ''}
                         >
                           <span>{item?.ten_dm}</span>
                         </li>
@@ -139,7 +128,7 @@ function Home() {
                     </div>
                     <div className="body">
                       <ul>
-                        <li className="active">
+                        <li onClick={() => navigation('/')}>
                           <span>Tất cả</span>
                         </li>
                         {categories.map((item) => (
@@ -178,13 +167,7 @@ function Home() {
                 </div>
               </div>
               {products.map((item) => (
-                <div
-                  className="item"
-                  key={item?._id}
-                  onClick={() => {
-                    handleAddtocart(item);
-                  }}
-                >
+                <div className="item" key={item?._id}>
                   <div className="img">
                     <Link to="#" title="Chả bì que ớt xiêm xanh">
                       <img
@@ -207,21 +190,9 @@ function Home() {
               ))}
             </div>
           </section>
-          <Pagination
-            onChange={onPageChange}
-            total={totalPage}
-            pageSize={11}
-            current={Number(searchParams.page) || 1}
-            style={{
-              textAlign: 'right',
-              marginRight: '5%',
-              marginBottom: '15px',
-              marginTop: '15px',
-            }}
-          />
         </main>
       )}
     </>
   );
 }
-export default Home;
+export default ProductByCategory;

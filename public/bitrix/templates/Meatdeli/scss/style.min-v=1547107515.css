@@ -5092,7 +5092,7 @@ footer .ftbottom .bright .list-lang a:last-child {
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
 }
-.productListing .item:not(:last-child):hover {
+.productListing .item:not(:first-child):hover {
   -webkit-box-shadow: 4px 4px 23px 0px rgba(0, 0, 0, 0.38);
   -moz-box-shadow: 4px 4px 23px 0px rgba(0, 0, 0, 0.38);
   box-shadow: 4px 4px 23px 0px rgba(0, 0, 0, 0.38);
@@ -5106,28 +5106,28 @@ footer .ftbottom .bright .list-lang a:last-child {
   border-right: 0px solid #ddd;
   z-index: 30;
 }
-.productListing .item:not(:last-child):hover:after {
+.productListing .item:not(:first-child):hover:after {
   opacity: 1;
   transition: 0.3s;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
 }
-.productListing .item:not(:last-child):hover .img:after {
+.productListing .item:not(:first-child):hover .img:after {
   opacity: 0.6;
   transition: 0.3s;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
 }
-.productListing .item:not(:last-child):hover .caption .title {
+.productListing .item:not(:first-child):hover .caption .title {
   color: #fff;
 }
-.productListing .item:not(:last-child):hover .caption .btn-buynow {
+.productListing .item:not(:first-child):hover .caption .btn-buynow {
   opacity: 1;
   transform: translateY(0px);
   -webkit-transform: translateY(0px);
   -o-transform: translateY(0px);
 }
-.productListing .item:last-child {
+.productListing .item:first-child {
   padding: 60px;
   text-align: center;
   display: -webkit-flex;
@@ -5144,14 +5144,14 @@ footer .ftbottom .bright .list-lang a:last-child {
   background: url("../img/pig.jpg") no-repeat center right;
   background-size: contain;
 }
-.productListing .item:last-child .caption .title {
+.productListing .item:first-child .caption .title {
   font-size: 20px;
   font-family: mb;
   line-height: 26px;
   color: #111111;
   text-transform: none;
 }
-.productListing .item:last-child .caption .btn-main {
+.productListing .item:first-child .caption .btn-main {
   margin-top: 20px;
 }
 @media (max-width: 1199px) {
@@ -5164,7 +5164,7 @@ footer .ftbottom .bright .list-lang a:last-child {
     grid-template-columns: repeat(2, 1fr);
     margin: auto 10px;
   }
-  .productListing .item:last-child {
+  .productListing .item:first-child {
     padding: 20px;
   }
   .productListing .item .caption .btn-buynow {
@@ -5182,7 +5182,7 @@ footer .ftbottom .bright .list-lang a:last-child {
   .productListing .item {
     padding: 0px;
   }
-  .productListing .item:last-child {
+  .productListing .item:first-child {
     padding: 5px;
   }
   .productListing .item .img {

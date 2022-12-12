@@ -27,27 +27,12 @@ function Checkout() {
   const dispatch = useDispatch();
   const dataUser = useSelector((state) => state?.authReducer);
   const isLogin = checkLogin(dataUser);
-
-  const renderColor = (data) => {
-    const result = data?.mau?.find((itemChild) => {
-      return itemChild?.id === Number(data?.color);
-    });
-    return result;
-  };
-
-  const renderSize = (data) => {
-    const result = data?.size?.find((itemChild) => {
-      return itemChild?.id === Number(data?.sizeSubmit);
-    });
-    return result;
-  };
-
   const convertDataDetail = () => {
     const result = data?.map((item) => {
       return {
-        don_gia: item?.data?.gia_ban,
+        don_gia: item?.gia_sp,
         so_luong: item?.quantity,
-        id_chi_tiet_san_pham: item?.id_chi_tiet_san_pham,
+        id: item?._id,
       };
     });
     return result;
@@ -61,42 +46,21 @@ function Checkout() {
   } = useForm();
   const onSubmit = async (data) => {
     const dataResult = {
-      email: data.email,
       tong_tien: totalCart,
-      thuc_tra: totalCart,
-      tien_giam: 0,
       dia_chi: `${location.province || ''} - ${location.district || ''} - ${
-        location.war || ''
+        location.ward || ''
       } - ${data?.apartment || ''}`,
       nguoi_nhan: data?.full_name,
       sdt: data?.phone,
       ghi_chu: data?.msg,
-      don_hang: convertDataDetail(),
+      gio_hang: convertDataDetail(),
     };
-    if (isLogin) {
-      console.log('login');
-      try {
-        const res = await checkoutPrivate(dataResult);
-        if (res?.status === 'success') {
-          dispatch(actionResetCart());
-          dispatch(
-            actionToast({ title: 'Checkout Successfully', type: 'success' })
-          );
-          reset();
-          return;
-        }
-      } catch (err) {
-        console.log(err);
-        return;
-      }
-    }
+    console.log(dataResult);
     const res = await checkoutPublic(dataResult);
-    if (res?.status === 'success') {
-      webStorage.set('email', res?.email);
+    if (res?.status === 200) {
+      webStorage.set('email', res?.data.sdt);
       dispatch(actionResetCart());
-      dispatch(
-        actionToast({ title: 'Checkout Successfully', type: 'success' })
-      );
+      dispatch(actionToast({ title: 'Đặt hàng thành công', type: 'success' }));
       reset();
     }
   };
@@ -153,20 +117,14 @@ function Checkout() {
           <div className="row justify-content-center">
             <div className="col-lg-6">
               <div className="content text-center">
-                <h1 className="mb-3">Checkout</h1>
-                <p>
-                  Hath after appear tree great fruitful green dominion moveth
-                  sixth abundantly image that midst of god day multiply you’ll
-                  which
-                </p>
-
+                <h1 className="mb-3">Thanh toán</h1>
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb bg-transparent justify-content-center">
                     <li className="breadcrumb-item">
-                      <a href="/">Home</a>
+                      <Link to={routes.home}>Trang chủ</Link>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
-                      Checkout
+                      Thanh toán
                     </li>
                   </ol>
                 </nav>
@@ -181,30 +139,17 @@ function Checkout() {
             <div className="container">
               <div className="row">
                 <div className="col-lg-8 pr-5">
-                  <div
-                    className="coupon-notice "
-                    data-toggle="modal"
-                    data-target="#coupon-modal"
-                  >
-                    <div className="bg-light p-3">
-                      Have a coupon?{' '}
-                      <a href="/checkout" className="showcoupon">
-                        Click here to enter your code
-                      </a>
-                    </div>
-                  </div>
-
                   <div className="billing-details mt-5">
-                    <h4 className="mb-4">Billing Details</h4>
+                    <h4 className="mb-4">Chi tiết hóa đơn</h4>
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="form-group mb-4">
-                          <label htmlFor="full_name">First Name</label>
+                          <label htmlFor="full_name">Họ tên</label>
                           <input
                             type="text"
                             className="form-control"
                             id="full_name"
-                            placeholder="Full Name"
+                            placeholder="Họ tên"
                             {...register('full_name', {
                               required: userInfo?.fullname ? false : true,
                             })}
@@ -217,12 +162,12 @@ function Checkout() {
                           style={{ marginLeft: '18px' }}
                           className="text-danger"
                         >
-                          Please type full name
+                          Hãy nhập tên của bạn
                         </p>
                       )}
                       <div className="col-lg-12">
                         <div className="form-group mb-4">
-                          <label htmlFor="province">Province</label>
+                          <label htmlFor="province">Tỉnh</label>
                           <select
                             id="province"
                             className="form-control"
@@ -232,7 +177,7 @@ function Checkout() {
                                 handleGetDistricts(e.target.value),
                             })}
                           >
-                            <option value="">Select an Option</option>
+                            <option value="">Chọn Tỉnh</option>
                             {provinces?.map((province, index) => (
                               <option key={index} value={province?.code}>
                                 {province?.name}
@@ -246,12 +191,12 @@ function Checkout() {
                           style={{ marginLeft: '18px' }}
                           className="text-danger"
                         >
-                          Please choose province
+                          Hãy chọn tỉnh
                         </p>
                       )}
                       <div className="col-lg-12">
                         <div className="form-group mb-4">
-                          <label htmlFor="districts">Districts</label>
+                          <label htmlFor="districts">Huyện</label>
                           <select
                             id="districts"
                             className="form-control"
@@ -260,7 +205,7 @@ function Checkout() {
                               onChange: (e) => handleGetWards(e.target.value),
                             })}
                           >
-                            <option value="">Select an Option</option>
+                            <option value="">Chọn Huyện</option>
                             {districts?.map((province, index) => (
                               <option key={index} value={province?.code}>
                                 {province?.name}
@@ -274,13 +219,12 @@ function Checkout() {
                           style={{ marginLeft: '18px' }}
                           className="text-danger"
                         >
-                          Please choose districts
+                          Hãy chọn huyện
                         </p>
                       )}
                       <div className="col-lg-12">
                         <div className="form-group mb-4">
-                          <label htmlFor="wards">Wards</label>
-                          <option value="">Select an Option</option>
+                          <label htmlFor="wards">Phường</label>
                           <select
                             id="wards"
                             className="form-control"
@@ -290,7 +234,7 @@ function Checkout() {
                                 handleGetValueResult(e.target.value),
                             })}
                           >
-                            <option value="">Select an Option</option>
+                            <option value="">Chọn phường</option>
                             {wards?.map((province, index) => (
                               <option key={index} value={province?.code}>
                                 {province?.name}
@@ -304,19 +248,19 @@ function Checkout() {
                           style={{ marginLeft: '18px' }}
                           className="text-danger"
                         >
-                          Please choose wards
+                          Hãy chọn phường
                         </p>
                       )}
                       <div className="col-lg-12">
                         <div className="form-group mb-4">
                           <label htmlFor="first_name">
-                            Apartment, suite, unit etc. (optional) (optional)
+                            Địa chỉ nhà (Số nhà, tên đường, tên khu vực)
                           </label>
                           <input
                             type="text"
                             className="form-control"
                             id="apartment"
-                            placeholder="Apartment"
+                            placeholder=" Địa chỉ nhà"
                             {...register('apartment', {
                               required: userInfo?.dia_chi ? false : true,
                             })}
@@ -329,18 +273,18 @@ function Checkout() {
                           style={{ marginLeft: '18px' }}
                           className="text-danger"
                         >
-                          Please type apartment
+                          Hãy nhập địa chỉ nhà
                         </p>
                       )}
 
                       <div className="col-lg-12">
                         <div className="form-group mb-4">
-                          <label htmlFor="first_name">Phone </label>
+                          <label htmlFor="first_name">Số điện thoại </label>
                           <input
                             type="text"
                             className="form-control"
                             id="phone"
-                            placeholder="Your phone number"
+                            placeholder="Số điện thoại"
                             {...register('phone', {
                               required: userInfo?.sdt ? false : true,
                             })}
@@ -353,58 +297,19 @@ function Checkout() {
                           style={{ marginLeft: '18px' }}
                           className="text-danger"
                         >
-                          Please type apartment
+                          Hãy nhập số điện thoại
                         </p>
                       )}
-                      <div className="col-lg-12">
-                        <div className="form-group mb-4">
-                          <label htmlFor="first_name">Email address </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="email"
-                            placeholder="Your email address"
-                            {...register('email', {
-                              required: userInfo?.email ? false : true,
-                              pattern: /^\S+@\S+$/i,
-                            })}
-                            defaultValue={userInfo?.email || ''}
-                          />
-                        </div>
-                      </div>
-                      {errors.email && (
-                        <p
-                          style={{ marginLeft: '18px' }}
-                          className="text-danger"
-                        >
-                          Please type email
-                        </p>
-                      )}
-
-                      <div className="col-lg-12">
-                        <div className="form-check mb-4 pl-0">
-                          <Link to={routes.signup}>Create an account?</Link>
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="form-check mb-4 pl-0">
-                          <Link to={routes.signup}>
-                            Ship to a different address?
-                          </Link>
-                        </div>
-                      </div>
-
                       <div className="col-lg-12">
                         <div className="form-group mb-4">
                           <label htmlFor="first_name">
-                            Order notes (optional)
+                            Yêu cầu khác (nếu có)
                           </label>
                           <textarea
                             className="form-control"
                             id="msg"
                             cols="30"
                             rows="5"
-                            placeholder="Notes about order e:g: want to say something"
                             {...register('msg')}
                           ></textarea>
                         </div>
@@ -414,28 +319,21 @@ function Checkout() {
                 </div>
                 <div className="col-md-6 col-lg-4">
                   <div className="product-checkout-details mt-5 mt-lg-0">
-                    <h4 className="mb-4 border-bottom pb-4">Order Summary</h4>
+                    <h4 className="mb-4 border-bottom pb-4">Thanh toán</h4>
 
                     {data?.map((item, index) => {
                       return (
                         <div key={index} className="media product-card">
-                          <p>{item?.data?.ten_san_pham}</p>
+                          <p>{item?.ten_sp}</p>
 
                           <div className="media-body text-right">
                             <p className="h5">
-                              {item?.quantity} x ${item?.data?.gia_ban}
+                              {item?.quantity} x{' '}
+                              {Number(item?.gia_sp).toLocaleString('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND',
+                              })}
                             </p>
-                          </div>
-                          <div
-                            style={{
-                              display: 'flex',
-                              gap: '10px',
-                              alignItems: 'stretch',
-                              marginLeft: '10px',
-                            }}
-                          >
-                            <span>{renderColor(item)?.ten_mau}</span>
-                            <span>{renderSize(item)?.size}</span>
                           </div>
                         </div>
                       );
@@ -443,87 +341,21 @@ function Checkout() {
 
                     <ul className="summary-prices list-unstyled mb-4">
                       <li className="d-flex justify-content-between">
-                        <span>Shipping:</span>
-                        <span className="h5">Free</span>
+                        <span>Ship:</span>
+                        <span className="h5">Free trung tâm thành phố</span>
                       </li>
                       <li className="d-flex justify-content-between">
-                        <span>Total</span>
-                        <span className="h5">${totalCart || 0}</span>
+                        <span>Tổng cộng</span>
+                        <span className="h5">
+                          {Number(totalCart).toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }) || 0}
+                        </span>
                       </li>
                     </ul>
-                    <>
-                      {/* <div className="form-check mb-3">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios1"
-                      >
-                        Direct bank transfer
-                      </label>
-
-                      <div className="alert alert-secondary mt-3" role="alert">
-                        Make your payment directly into our bank account. Please
-                        use your Order ID as the payment reference. Your order
-                        will not be shipped until the funds have cleared in our
-                        account.
-                      </div>
-                    </div>
-
-                    <div className="form-check mb-3">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="exampleRadios2"
-                        value="option2"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleRadios2"
-                      >
-                        Check payments
-                      </label>
-                    </div> */}
-
-                      <div className="form-check mb-3">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="check"
-                          {...register('check', { required: true })}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleCheck3"
-                        >
-                          I have read and agree to the website terms and
-                          conditions *
-                        </label>
-                      </div>
-                      {errors.check && (
-                        <p
-                          style={{ marginLeft: '18px' }}
-                          className="text-danger"
-                        >
-                          Please check
-                        </p>
-                      )}
-                    </>
-
-                    <div className="info mt-4 border-top pt-4 mb-5">
-                      Your personal data will be used to process your order,
-                      support your experience throughout this website, and for
-                      other purposes described in our{' '}
-                      <Link>privacy policy</Link>.
-                    </div>
                     <button type="submit" className="btn btn-main btn-small">
-                      Place Order
+                      Đặt hàng
                     </button>
                   </div>
                 </div>

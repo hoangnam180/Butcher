@@ -36,9 +36,7 @@ const cartSlice = createSlice({
   reducers: {
     actionUpdateQuantity(state, action) {
       const { id, quantity } = action.payload;
-      const index = state.data.findIndex(
-        (item) => item.id_chi_tiet_san_pham === id
-      );
+      const index = state.data.findIndex((item) => item._id === id);
       if (index !== -1) {
         state.step =
           state.step - Number(state.data[index].quantity) + Number(quantity);
@@ -49,9 +47,7 @@ const cartSlice = createSlice({
     },
     actionDelete(state, action) {
       const { id } = action.payload;
-      const index = state.data.findIndex(
-        (item) => item.id_chi_tiet_san_pham === id
-      );
+      const index = state.data.findIndex((item) => item._id === id);
       if (index !== -1) {
         state.step = state.step - Number(state.data[index].quantity);
         state.data.splice(index, 1);
@@ -65,20 +61,11 @@ const cartSlice = createSlice({
     },
     actionAddToCart: (state, action) => {
       const { data, step } = action.payload;
-      const index =
-        state.data &&
-        state.data.findIndex((item) => {
-          return item?.data?.id === data?.data?.id;
-        });
-      if (
-        index !== -1 &&
-        state.data[index].color === data.color &&
-        state.data[index].sizeSubmit === data.sizeSubmit
-      ) {
-        state.data[index].quantity =
-          Number(state.data[index].quantity) + Number(step);
+      const index = state.data.findIndex((item) => item?._id === data._id);
+      if (index !== -1) {
+        state.data[index].quantity = Number(state.data[index].quantity) + step;
       } else {
-        state.data.push({ ...data, quantity: Number(step) });
+        state.data.push({ ...data, quantity: step || 1 });
       }
       state.step = Number(state.step) + Number(step);
       localStorage.setItem(STEP_CART, state.step);
@@ -87,6 +74,8 @@ const cartSlice = createSlice({
     actionResetCart: (state) => {
       state.step = 0;
       state.data = [];
+      state.totalCart = 0;
+      localStorage.setItem(TOTAL_CART, state.totalCart);
       localStorage.setItem(STEP_CART, state.step);
       localStorage.setItem(DATA_CART, JSON.stringify(state.data));
     },

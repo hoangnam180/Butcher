@@ -2,7 +2,18 @@ import request from '../bases/request';
 const prefix = '/api';
 export const getProducts = async (params) =>
   request({
-    url: `${prefix}/home/product`,
+    url: `${prefix}/products`,
+    method: 'GET',
+    params,
+  });
+export const getProductsByCategory = async (id) =>
+  request({
+    url: `${prefix}/products/${id}`,
+    method: 'GET',
+  });
+export const getCategories = async () =>
+  request({
+    url: `${prefix}/categories`,
     method: 'GET',
   });
 export const getProductDetail = async (id) =>
@@ -14,12 +25,6 @@ export const getProductDetail = async (id) =>
 export const getArrival = async (params) =>
   request({
     url: `${prefix}/home/arrival`,
-    method: 'GET',
-    params,
-  });
-export const getCategory = async (params) =>
-  request({
-    url: `${prefix}/home/category`,
     method: 'GET',
     params,
   });

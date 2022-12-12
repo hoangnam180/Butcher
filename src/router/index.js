@@ -5,11 +5,16 @@ import Checkout from 'src/pages/checkout';
 import Home from 'src/pages/home';
 import Login from 'src/components/Auth/login';
 import SignUp from 'src/components/Auth/signUp';
+import ProductByCategory from 'src/pages/productbyCategory';
 // Public routes
 const publicRoutes = [
   {
     path: routes.home,
     component: Home,
+  },
+  {
+    path: routes.product,
+    component: ProductByCategory,
   },
 
   {

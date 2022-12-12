@@ -3,16 +3,9 @@ const prefix = '/api';
 
 export const checkoutPublic = async (data) =>
   request({
-    url: `${prefix}/don-hang/create`,
+    url: `${prefix}/bill`,
     method: 'POST',
     data,
-  });
-export const checkoutPrivate = async (data) =>
-  request({
-    url: `${prefix}/auth/don-hang`,
-    method: 'POST',
-    data,
-    tokenClient: true,
   });
 export const historyCheckout = async () =>
   request({

@@ -10,7 +10,6 @@ const baseApiConfig = {
   baseURL: API_SERVER,
   headers: {
     'content-type': 'application/json',
-    'ngrok-skip-browser-warning': 'any',
   },
 
   timeout: 60000, // 60s

@@ -1,10 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from 'src/components/Auth/privateRoute';
+import CardFixed from 'src/components/common/CardFixed';
 import LayoutDefault from 'src/layouts/LayoutDefault';
 import { privateRoutes, publicRoutes } from './index';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const RouterComponent = () => {
+  const navigate = useNavigate();
+  const { step } = useSelector((state) => state?.cartReducer);
+
   return (
     <div className="App">
+      <CardFixed
+        step={step}
+        onClick={() => {
+          navigate('/cart');
+        }}
+      />
       <Routes>
         {publicRoutes.map((route, index) => {
           const Page = route.component;

@@ -1,2 +1,34 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
+.modal-backdrop.fade.in {
+  display: none;
+}
+.style2 {
+  color: #333 !important;
+}
+.cart_item {
+  @media screen and (max-width: 760px) {
+    border-bottom: 1px solid #333;
+    margin-bottom: 10px;
+    .product-remove {
+      .remove {
+        font-size: 18px;
+        padding-right: 30px;
+      }
+    }
+    .quantity {
+      justify-content: flex-end;
+    }
+    td {
+      padding-left: 15px !important;
+      padding-right: 50px !important;
+      border-bottom: 1px solid #ddd !important;
+      border-top: 1px solid transparent !important;
+    }
+  }
+}
+@media screen and (max-width: 760px) {
+  .page-wrapper {
+    padding-top: 0 !important;
+  }
+}
