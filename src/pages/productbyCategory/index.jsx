@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loading from 'src/components/common/Loading';
 import { getCategories, getProductsByCategory } from 'src/libs/apis/home';
@@ -12,6 +12,7 @@ function ProductByCategory() {
   const [categories, setCategories] = useState([]);
   const params = useParams();
   const navigation = useNavigate();
+  const refBox = useRef(null);
   const dispatch = useDispatch();
 
   const handleClickCategory = (id) => {
@@ -135,13 +136,18 @@ function ProductByCategory() {
                 </div>
                 <div className="filterCatMobile selectbox hidden-lg hidden-md hidden-sm">
                   <div className="catProduct catProduct1 active">
-                    <div className="head">
+                    <div
+                      className="head mobile"
+                      onClick={() => {
+                        refBox.current.classList.toggle('active');
+                      }}
+                    >
                       <div className="inner">
                         <span>Tất cả</span>
                       </div>
                     </div>
                     <div className="body">
-                      <ul>
+                      <ul ref={refBox}>
                         <li onClick={() => navigation('/')}>
                           <span>Tất cả</span>
                         </li>

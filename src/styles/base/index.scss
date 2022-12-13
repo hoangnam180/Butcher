@@ -32,3 +32,13 @@
     padding-top: 0 !important;
   }
 }
+
+.pdHome .filterProductBox .filterCatMobile ul {
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+}

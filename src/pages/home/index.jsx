@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from 'src/components/common/Loading';
 import { Pagination } from 'antd';
@@ -14,6 +14,7 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const dispatch = useDispatch();
+  const refBox = useRef(null);
   const [searchParams, setSearchParams] = useCustomSearchParams();
   const navigation = useNavigate();
   const onPageChange = (page) => {
@@ -129,15 +130,20 @@ function Home() {
                     </ul>
                   </div>
                 </div>
-                <div className="filterCatMobile selectbox hidden-lg hidden-md hidden-sm">
+                <div className="filterCatMobile hidden-lg hidden-md hidden-sm">
                   <div className="catProduct catProduct1 active">
-                    <div className="head">
+                    <div
+                      className="head mobile"
+                      onClick={() => {
+                        refBox.current.classList.toggle('active');
+                      }}
+                    >
                       <div className="inner">
                         <span>Tất cả</span>
                       </div>
                     </div>
                     <div className="body">
-                      <ul>
+                      <ul ref={refBox}>
                         <li className="active">
                           <span>Tất cả</span>
                         </li>

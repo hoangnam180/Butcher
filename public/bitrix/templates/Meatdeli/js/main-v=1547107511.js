@@ -230,17 +230,17 @@ $(document).ready(function () {
     $('.parallax').paroller();
   }
 
-  //   function filterPostRecipes(value) {
-  //     var loaithit = $('.category-filter .head .inner').attr('data-value');
-  //     var loainau = $('.type-filter .head .inner').attr('data-value');
-  //     if (typeof loaithit === 'undefined' || typeof loainau === 'undefined') {
-  //       return false;
-  //     }
-  //     if (loainau.length > 0) loainau = '/' + loainau;
-  //     // var url = "./recipe-listing.html?loaithit=" + loaithit + "&loainau=" + loainau + "#filtertool";
-  //     var url = '/goc-am-thuc/' + loaithit + loainau + '/' + '#filtertool';
-  //     window.location = window.location.url = url;
+  // function filterPostRecipes(value) {
+  //   var loaithit = $('.category-filter .head .inner').attr('data-value');
+  //   var loainau = $('.type-filter .head .inner').attr('data-value');
+  //   if (typeof loaithit === 'undefined' || typeof loainau === 'undefined') {
+  //     return false;
   //   }
+  //   if (loainau.length > 0) loainau = '/' + loainau;
+  //   // var url = "./recipe-listing.html?loaithit=" + loaithit + "&loainau=" + loainau + "#filtertool";
+  //   var url = '/goc-am-thuc/' + loaithit + loainau + '/' + '#filtertool';
+  //   window.location = window.location.url = url;
+  // }
 
   // var SelectBox = {
   //   selectBoxDisableAll: function () {
@@ -378,7 +378,7 @@ $(document).ready(function () {
   // SelectBox.selectBoxItemClicked2();
   // SelectBox.selectBoxHeadClicked();
 
-  // // filterProduct Home
+  // filterProduct Home
   // var catProduct = $('.filterProductBox .filterCat .cat>li');
   // var product = $('.filterProductBox .filterCat .cat li ul li');
   // var productmobile = $('.pdlistMobile ul li');
@@ -417,65 +417,65 @@ $(document).ready(function () {
   // App.general();
   // App.fixedSocial();
 
-  // // pig
-  // var itemPig = $('.myModalTracer .pig .st0');
-  // var position = $('.myModalTracer .position .list');
-  // var pig = $('.myModalTracer .pig');
-  // var itemComponentsPig = $('.myModalTracer .position .list li');
-  // $.fn.addSvgClass = function (className) {
-  //   var attr;
-  //   this.each(function () {
-  //     attr = $(this).attr('class');
-  //     if (attr.indexOf(className) < 0) {
-  //       $(this).attr('class', attr + ' ' + className + ' ');
-  //     }
-  //   });
-  // };
-  // $.fn.removeSvgClass = function (className) {
-  //   var attr;
-  //   this.each(function () {
-  //     attr = $(this).attr('class');
-  //     attr = attr.replace(className, ' ');
-  //     $(this).attr('class', attr);
-  //   });
-  // };
+  // pig
+  var itemPig = $('.myModalTracer .pig .st0');
+  var position = $('.myModalTracer .position .list');
+  var pig = $('.myModalTracer .pig');
+  var itemComponentsPig = $('.myModalTracer .position .list li');
+  $.fn.addSvgClass = function (className) {
+    var attr;
+    this.each(function () {
+      attr = $(this).attr('class');
+      if (attr.indexOf(className) < 0) {
+        $(this).attr('class', attr + ' ' + className + ' ');
+      }
+    });
+  };
+  $.fn.removeSvgClass = function (className) {
+    var attr;
+    this.each(function () {
+      attr = $(this).attr('class');
+      attr = attr.replace(className, ' ');
+      $(this).attr('class', attr);
+    });
+  };
 
-  // itemPig.click(function () {
-  //   var id = $(this).attr('data-id');
-  //   itemPig.removeSvgClass('active');
-  //   itemPig.removeSvgClass('clicked');
-  //   pig.find('.p' + id).addSvgClass('active');
-  //   pig.find('.p' + id).addSvgClass('clicked');
-  //   position.find('li').removeClass('active');
-  //   position.find('.' + id).addClass('active');
-  // });
-  // itemPig.hover(
-  //   function () {
-  //     var id = $(this).attr('data-id');
-  //     itemPig.removeSvgClass('active');
-  //     pig.find('.p' + id).addSvgClass('active');
-  //     position.find('li').removeClass('active');
-  //     position.find('.' + id).addClass('active');
-  //   },
-  //   function () {
-  //     if (itemPig.hasClass('clicked')) {
-  //       itemPig.removeSvgClass('active');
-  //       position.find('li').removeClass('active');
-  //     }
-  //   }
-  // );
-  // itemComponentsPig.click(function () {
-  //   var id = $(this).attr('data-id');
-  //   position.find('li').removeClass('active');
-  //   $(this).addClass('active');
-  //   itemPig.removeSvgClass('active');
-  //   pig.find('.p' + id).addSvgClass('active');
-  // });
-
-  $(document).click(function () {
-    SelectBox.selectBoxDisableAll();
-    $('.explainbox').slideUp(200);
+  itemPig.click(function () {
+    var id = $(this).attr('data-id');
+    itemPig.removeSvgClass('active');
+    itemPig.removeSvgClass('clicked');
+    pig.find('.p' + id).addSvgClass('active');
+    pig.find('.p' + id).addSvgClass('clicked');
+    position.find('li').removeClass('active');
+    position.find('.' + id).addClass('active');
   });
+  itemPig.hover(
+    function () {
+      var id = $(this).attr('data-id');
+      itemPig.removeSvgClass('active');
+      pig.find('.p' + id).addSvgClass('active');
+      position.find('li').removeClass('active');
+      position.find('.' + id).addClass('active');
+    },
+    function () {
+      if (itemPig.hasClass('clicked')) {
+        itemPig.removeSvgClass('active');
+        position.find('li').removeClass('active');
+      }
+    }
+  );
+  itemComponentsPig.click(function () {
+    var id = $(this).attr('data-id');
+    position.find('li').removeClass('active');
+    $(this).addClass('active');
+    itemPig.removeSvgClass('active');
+    pig.find('.p' + id).addSvgClass('active');
+  });
+
+  // $(document).click(function () {
+  //   SelectBox.selectBoxDisableAll();
+  //   $('.explainbox').slideUp(200);
+  // });
 
   $(window).scroll(function () {
     Header.changedScroll();
@@ -485,7 +485,7 @@ $(document).ready(function () {
   $(window).resize(function () {
     setTimeout(function () {
       Menu.disableMenuMobile();
-      // Menu.setHeightInnerMenuMobile();
+      Menu.setHeightInnerMenuMobile();
       Header.disableTopMenu();
     }, 100);
   });
@@ -495,13 +495,13 @@ $(document).ready(function () {
       navigator.userAgent || navigator.vendor || window.opera
     );
 
-    // if(isMobile){
-    //    $('.jarallax-ab').jarallax('destroy');
-    // }else{
-    //    $('.jarallax-ab').jarallax({
-    //        speed: 0.7,
-    //    });
-    // }
+    if (isMobile) {
+      $('.jarallax-ab').jarallax('destroy');
+    } else {
+      $('.jarallax-ab').jarallax({
+        speed: 0.7,
+      });
+    }
     if (isMobile) {
       $('.jarallax').jarallax('destroy');
     } else {
@@ -511,9 +511,9 @@ $(document).ready(function () {
     }
   });
 
-  // $("html").easeScroll({
-  //     frameRate: 120,
-  //     animationTime: 800,
-  //     stepSize: 120,
-  // });
+  $('html').easeScroll({
+    frameRate: 120,
+    animationTime: 800,
+    stepSize: 120,
+  });
 });
