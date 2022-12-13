@@ -15,7 +15,6 @@ const baseApiConfig = {
   timeout: 60000, // 60s
   paramsSerializer: (params) => queryString.stringify(params),
 };
-
 const SESSION_EXPIRED_STATUS_CODE = 401;
 
 const baseApiClient = axios.create(baseApiConfig);
