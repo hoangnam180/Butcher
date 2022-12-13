@@ -65,7 +65,7 @@ function History() {
                 <form className="form-inline">
                   <div style={{ width: '55% ' }}>
                     <input
-                      type="number"
+                      text="number"
                       className="form-control"
                       placeholder="Nhập số điện thoại"
                       ref={refInput}

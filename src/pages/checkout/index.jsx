@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import routes from 'src/configs/router';
 import { checkoutPrivate, checkoutPublic } from 'src/libs/apis/checkout';
 import {
@@ -27,6 +27,7 @@ function Checkout() {
   const dispatch = useDispatch();
   const dataUser = useSelector((state) => state?.authReducer);
   const isLogin = checkLogin(dataUser);
+  const navigate = useNavigate();
   const convertDataDetail = () => {
     const result = data?.map((item) => {
       return {
@@ -62,6 +63,7 @@ function Checkout() {
       dispatch(actionResetCart());
       dispatch(actionToast({ title: 'Đặt hàng thành công', type: 'success' }));
       reset();
+      navigate(routes.history);
     }
   };
 
@@ -328,7 +330,7 @@ function Checkout() {
 
                           <div className="media-body text-right">
                             <p className="h5">
-                              {item?.quantity} x{' '}
+                              {item?.quantity}(kg) x{' '}
                               {Number(item?.gia_sp).toLocaleString('vi-VN', {
                                 style: 'currency',
                                 currency: 'VND',

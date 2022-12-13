@@ -131,12 +131,12 @@ function HistoryDetail() {
                     </li>
                   </ul>
                   <div className="d-flex">
-                    <Link
+                    {/* <Link
                       to={routes?.checkout}
                       className="btn btn-main btn-small"
                     >
                       Hủy đơn hàng
-                    </Link>
+                    </Link> */}
                     <Link to={routes?.home} className="btn btn-main btn-small">
                       Tiếp tục mua hàng
                     </Link>
