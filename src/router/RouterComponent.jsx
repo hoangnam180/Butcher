@@ -5,12 +5,14 @@ import LayoutDefault from 'src/layouts/LayoutDefault';
 import { privateRoutes, publicRoutes } from './index';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Header from 'src/layouts/Header';
 const RouterComponent = () => {
   const navigate = useNavigate();
   const { step } = useSelector((state) => state?.cartReducer);
 
   return (
     <div className="App">
+      <Header />
       <CardFixed
         step={step}
         onClick={() => {

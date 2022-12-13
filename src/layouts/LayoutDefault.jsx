@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import PropTypes from 'prop-types';
 import { ToastContainer } from 'react-toastify';
 import Loading from 'src/components/common/Loading';

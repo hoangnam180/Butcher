@@ -47,7 +47,6 @@ function Home() {
         setLoading(false);
       } catch {
         setLoading(false);
-        console.log('error');
       }
     };
     fetchData();

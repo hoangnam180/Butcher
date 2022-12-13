@@ -3,14 +3,30 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loading from 'src/components/common/Loading';
 import { getCategories, getProductsByCategory } from 'src/libs/apis/home';
 import { API_SERVER } from 'src/constants/configs';
+import { useDispatch } from 'react-redux';
+import { actionAddToCart } from 'src/store/cartSlice';
+import { actionToast } from 'src/store/authSlice';
 function ProductByCategory() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const params = useParams();
   const navigation = useNavigate();
+  const dispatch = useDispatch();
+
   const handleClickCategory = (id) => {
     navigation(`/products/${id}`);
+  };
+  const handleAddtocart = (data) => {
+    dispatch(
+      actionAddToCart({
+        data,
+        step: 1,
+      })
+    );
+    dispatch(
+      actionToast({ title: 'Thêm vào giỏ hàng thành công!', type: 'success' })
+    );
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +37,6 @@ function ProductByCategory() {
         setLoading(false);
       } catch {
         setLoading(false);
-        console.log('error');
       }
     };
     fetchData();
@@ -35,7 +50,6 @@ function ProductByCategory() {
         setLoading(false);
       } catch {
         setLoading(false);
-        console.log('error');
       }
     };
     fetchData();
@@ -167,7 +181,13 @@ function ProductByCategory() {
                 </div>
               </div>
               {products.map((item) => (
-                <div className="item" key={item?._id}>
+                <div
+                  className="item"
+                  key={item?._id}
+                  onClick={() => {
+                    handleAddtocart(item);
+                  }}
+                >
                   <div className="img">
                     <Link to="#" title="Chả bì que ớt xiêm xanh">
                       <img

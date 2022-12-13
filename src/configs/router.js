@@ -6,6 +6,8 @@ const routes = {
   login: '/login',
   signup: '/signup',
   forgot: '/forgot-password',
+  history: '/history',
+  historyDetail: '/history/:id',
 };
 
 export default routes;

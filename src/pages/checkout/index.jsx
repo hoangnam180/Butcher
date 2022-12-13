@@ -56,10 +56,9 @@ function Checkout() {
       ghi_chu: data?.msg,
       gio_hang: convertDataDetail(),
     };
-    console.log(dataResult);
     const res = await checkoutPublic(dataResult);
     if (res?.status === 200) {
-      webStorage.set('email', res?.data.sdt);
+      webStorage.set('phone', res?.data.sdt);
       dispatch(actionResetCart());
       dispatch(actionToast({ title: 'Đặt hàng thành công', type: 'success' }));
       reset();

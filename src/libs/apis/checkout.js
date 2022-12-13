@@ -7,12 +7,16 @@ export const checkoutPublic = async (data) =>
     method: 'POST',
     data,
   });
-export const historyCheckout = async () =>
+export const historyCheckout = async (params) =>
   request({
-    url: `${prefix}/don-hang/lich-su-don-hang`,
+    url: `${prefix}/history-bill`,
     method: 'GET',
-    tokenClient: true,
-    emailClient: true,
+    params,
+  });
+export const historyCheckoutById = async (id) =>
+  request({
+    url: `${prefix}/history-bill/${id}`,
+    method: 'GET',
   });
 export async function historyCheckoutPrivate() {
   return request({

@@ -1,6 +1,6 @@
 const Loading = () => {
   return (
-    <div class="page-loading">
+    <div className="page-loading">
       <img
         src="../bitrix/templates/Meatdeli/img/meatdeli-loading.gif"
         alt="Loading"
