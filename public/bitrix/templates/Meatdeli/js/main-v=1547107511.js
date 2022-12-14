@@ -1,7 +1,7 @@
-$(window).load(() => {
-  setTimeout(() => $('.page-loading').fadeOut(500), 1000);
-});
 $(document).ready(function () {
+  $(window).load(() => {
+    setTimeout(() => $('.page-loading').fadeOut(500), 2000);
+  });
   var sizeScreenTablet = 975;
   var sizeScreenMobile = 755;
   var header = $('header-top');
